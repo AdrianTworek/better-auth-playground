@@ -13,4 +13,9 @@ export default [
     ignores: ['coverage', '**/public', '**/dist', 'pnpm-lock.yaml', 'pnpm-workspace.yaml'],
   },
   eslintPluginPrettierRecommended,
+  {
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
 ];
