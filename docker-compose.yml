@@ -17,10 +17,10 @@ services:
       timeout: 5s
       retries: 5
 
-  server:
+  express-server:
     build:
       context: .
-      dockerfile: apps/server/Dockerfile
+      dockerfile: apps/express-server/Dockerfile
     ports:
       - '4000:4000'
     environment:
@@ -31,8 +31,8 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - ./apps/server:/app/apps/server
-      - /app/apps/server/node_modules
+      - ./apps/express-server:/app/apps/express-server
+      - /app/apps/express-server/node_modules
     networks:
       - app-network
 
