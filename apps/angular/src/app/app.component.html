@@ -1,0 +1,83 @@
+<main class="main">
+  <div class="content">
+    @if (session().error) {
+      <p>Error: {{ session().error?.message }}</p>
+    }
+
+    @if (session().isPending) {
+      <p>Loading...</p>
+    } @else if (session().data.user) {
+      <p>Welcome, {{ session().data.user?.name }}!</p>
+      <button (click)="signOut()">Sign out</button>
+    } @else {
+      <form [formGroup]="registerMode() ? registerForm : loginForm" (ngSubmit)="onSubmit()">
+        <div>
+          @if (registerMode()) {
+            <input id="name" type="text" placeholder="Name" formControlName="name" />
+            <label for="name">Name</label>
+          }
+        </div>
+
+        <div>
+          <input id="email" type="email" placeholder="Email" formControlName="email" />
+          <label for="email">Email</label>
+          @if (
+            registerMode()
+              ? registerForm.controls.email.invalid && registerForm.controls.email.touched
+              : loginForm.controls.email.invalid && loginForm.controls.email.touched
+          ) {
+            @if (
+              registerMode()
+                ? registerForm.controls.email.errors?.['required']
+                : loginForm.controls.email.errors?.['required']
+            ) {
+              <p>Email is required</p>
+            }
+            @if (
+              registerMode()
+                ? registerForm.controls.email.errors?.['email']
+                : loginForm.controls.email.errors?.['email']
+            ) {
+              <p>Invalid email</p>
+            }
+          }
+        </div>
+        <div>
+          <input id="password" type="password" placeholder="Password" formControlName="password" />
+          <label for="password">Password</label>
+          @if (
+            registerMode()
+              ? registerForm.controls.password.invalid && registerForm.controls.password.touched
+              : loginForm.controls.password.invalid && loginForm.controls.password.touched
+          ) {
+            @if (
+              registerMode()
+                ? registerForm.controls.password.errors?.['required']
+                : loginForm.controls.password.errors?.['required']
+            ) {
+              <p>Password is required</p>
+            }
+          }
+        </div>
+
+        <button type="submit">
+          @if (registerMode()) {
+            Sign up
+          } @else {
+            Sign in
+          }
+        </button>
+      </form>
+
+      <div>
+        @if (registerMode()) {
+          Already have an account? <button (click)="toggleRegisterMode()">Sign in</button>
+        } @else {
+          Don't have an account? <button (click)="toggleRegisterMode()">Sign up</button>
+        }
+      </div>
+    }
+  </div>
+</main>
+
+<router-outlet />
