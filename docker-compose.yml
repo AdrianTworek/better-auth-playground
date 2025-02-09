@@ -50,6 +50,18 @@ services:
     networks:
       - app-network
 
+  angular:
+    build:
+      context: .
+      dockerfile: apps/angular/Dockerfile
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./apps/angular:/app/apps/angular
+      - /app/apps/angular/node_modules
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
