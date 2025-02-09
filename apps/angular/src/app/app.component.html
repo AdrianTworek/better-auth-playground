@@ -15,6 +15,11 @@
           @if (registerMode()) {
             <input id="name" type="text" placeholder="Name" formControlName="name" />
             <label for="name">Name</label>
+            @if (registerMode() && registerForm.controls.name.invalid && registerForm.controls.name.touched) {
+              @if (registerForm.controls.name.errors?.['required']) {
+                <p>Name is required</p>
+              }
+            }
           }
         </div>
 
